@@ -13,30 +13,31 @@
 
     <script>
         async function generateQRCode() {
-            const url = document.getElementById('url').value;
-            if (!url) {
-                alert("Please enter a valid URL.");
-                return;
-            }
+    const url = document.getElementById('url').value;
+    if (!url) {
+        alert("Please enter a valid URL.");
+        return;
+    }
 
-            try {
-                const response = await fetch('/.netlify/functions/generate_qr', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url })
-                });
+    try {
+        const response = await fetch('/.netlify/functions/generate_qr', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+        });
 
-                const result = await response.json();
-                if (response.ok) {
-                    document.getElementById('qrImage').src = result.qr_code;
-                    document.getElementById('qrImage').style.display = 'block';
-                } else {
-                    alert('Error generating QR Code: ' + result.message);
-                }
-            } catch (error) {
-                alert('An error occurred: ' + error.toString());
-            }
+        const result = await response.json();  // Ensure parsing is handled safely
+
+        if (response.ok) {
+            document.getElementById('qrImage').src = result.qr_code;
+            document.getElementById('qrImage').style.display = 'block';
+        } else {
+            alert(`Error: ${result.error}`);
         }
+    } catch (error) {
+        alert('An error occurred: ' + error.toString());
+    }
+}
     </script>
 </body>
 </html>
