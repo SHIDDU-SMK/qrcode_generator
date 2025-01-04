@@ -1,0 +1,18 @@
+<h1>Secure QR Code Generator</h1>
+<input type="text" id="url" placeholder="Enter URL">
+<button onclick="generateQRCode()">Generate Secure QR Code</button>
+<img id="qr-image" style="display:none;" alt="QR Code">
+
+<script>
+    async function generateQRCode() {
+        const url = document.getElementById('url').value;
+        const response = await fetch('/.netlify/functions/generate_qr', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+        });
+        const data = await response.json();
+        document.getElementById('qr-image').src = `data:image/png;base64,${data.qr_code}`;
+        document.getElementById('qr-image').style.display = 'block';
+    }
+</script>
