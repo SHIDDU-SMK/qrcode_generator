@@ -1,18 +1,42 @@
-<h1>Secure QR Code Generator</h1>
-<input type="text" id="url" placeholder="Enter URL">
-<button onclick="generateQRCode()">Generate Secure QR Code</button>
-<img id="qr-image" style="display:none;" alt="QR Code">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlify QR Code Generator</title>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <input type="text" id="url" placeholder="Enter URL" required>
+    <button onclick="generateQRCode()">Generate QR Code</button>
+    <img id="qrImage" style="display:none;" alt="Generated QR Code">
 
-<script>
-    async function generateQRCode() {
-        const url = document.getElementById('url').value;
-        const response = await fetch('/.netlify/functions/generate_qr', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url })
-        });
-        const data = await response.json();
-        document.getElementById('qr-image').src = `data:image/png;base64,${data.qr_code}`;
-        document.getElementById('qr-image').style.display = 'block';
-    }
-</script>
+    <script>
+        async function generateQRCode() {
+            const url = document.getElementById('url').value;
+            if (!url) {
+                alert("Please enter a valid URL.");
+                return;
+            }
+
+            try {
+                const response = await fetch('/.netlify/functions/generate_qr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('qrImage').src = result.qr_code;
+                    document.getElementById('qrImage').style.display = 'block';
+                } else {
+                    alert('Error generating QR Code: ' + result.message);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.toString());
+            }
+        }
+    </script>
+</body>
+</html>
