@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMK Solutions QR Code Generator</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <h1>SMK Solutions QR Code Generator</h1>
-
+        
         <form id="qrForm">
-            <!-- URL Input -->
             <label for="url">Enter URL:</label>
             <input type="text" id="url" placeholder="Enter URL" required>
 
@@ -23,14 +22,13 @@
                 <img id="logoPreview" style="display:none; max-width: 80px;" alt="Logo Preview">
             </div>
 
-            <!-- Color Picker Section -->
+            <!-- Color Pickers -->
             <div class="color-container">
                 <div>
                     <label for="darkColor">QR Code Color:</label>
                     <input type="color" id="darkColor" value="#000000" onchange="updateColorPreview('darkColor')">
                     <span class="color-preview" id="darkColorPreview"></span>
                 </div>
-
                 <div>
                     <label for="lightColor">Background Color:</label>
                     <input type="color" id="lightColor" value="#FFFFFF" onchange="updateColorPreview('lightColor')">
@@ -41,112 +39,32 @@
             <button type="button" onclick="generateQRCode()">Generate QR Code</button>
         </form>
 
-        <!-- QR Code Display and Download Section -->
+        <!-- QR Code and Download Section -->
         <div class="result">
-            <h2>Your QR Code</h2>
+            <h1>Your QR Code</h1>
             <div class="qr-download-container">
                 <img id="qrImage" style="display:none;" alt="Generated QR Code">
-                <div class="download-buttons">
-                    <!-- Fixed visibility issue with consistent id handling -->
-                    <a id="downloadPng" class="download-btn" style="display:none;" download="qrcode.png" title="Download PNG">
-                        <i class="fas fa-file-image"></i>
+
+                <!-- ✅ Download Buttons Section -->
+                <div class="download-buttons" style="display:none;">
+                    <a id="downloadPng" class="download-btn" download="qrcode.png" title="Download PNG">
+                        <i class="fas fa-download"></i>
+                        PNG
                     </a>
-                    <a id="downloadJpg" class="download-btn" style="display:none;" download="qrcode.jpg" title="Download JPG">
-                        <i class="fas fa-file-image"></i>
+                    <a id="downloadJpg" class="download-btn" download="qrcode.jpg" title="Download JPG">
+                        <i class="fas fa-download"></i>
+                        JPG
                     </a>
-                    <a id="downloadPdf" class="download-btn" style="display:none;" download="qrcode.pdf" title="Download PDF">
-                        <i class="fas fa-file-pdf"></i>
+                    <a id="downloadPdf" class="download-btn" download="qrcode.pdf" title="Download PDF">
+                        <i class="fas fa-download"></i>
+                        PDF
                     </a>
                 </div>
             </div>
-            
         </div>
     </div>
 
-    <script>
-        function previewLogo() {
-            const logoInput = document.getElementById('logoInput').files[0];
-            if (logoInput) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const logoPreview = document.getElementById('logoPreview');
-                    logoPreview.src = e.target.result;
-                    logoPreview.style.display = 'block';
-                };
-                reader.readAsDataURL(logoInput);
-            }
-        }
-
-        function updateColorPreview(colorInputId) {
-            const colorValue = document.getElementById(colorInputId).value;
-            document.getElementById(`${colorInputId}Preview`).style.backgroundColor = colorValue;
-        }
-
-        async function generateQRCode() {
-            const url = document.getElementById('url').value;
-            const logoInput = document.getElementById('logoInput').files[0];
-            const darkColor = document.getElementById('darkColor').value;
-            const lightColor = document.getElementById('lightColor').value;
-
-            if (!url) {
-                alert("Please enter a valid URL.");
-                return;
-            }
-
-            let logoUrl = null;
-
-            if (logoInput) {
-                const reader = new FileReader();
-                reader.onloadend = async function () {
-                    logoUrl = reader.result;
-                    await sendToServer(url, logoUrl, darkColor, lightColor);
-                };
-                reader.readAsDataURL(logoInput);
-            } else {
-                await sendToServer(url, null, darkColor, lightColor);
-            }
-        }
-
-        async function sendToServer(url, logoUrl, darkColor, lightColor) {
-            try {
-                const response = await fetch('/.netlify/functions/generate_qr', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url, logoUrl, darkColor, lightColor })
-                });
-
-                const result = await response.json();
-                if (response.ok) {
-                    const qrImage = document.getElementById('qrImage');
-                    qrImage.src = result.qr_code;
-                    qrImage.style.display = 'block';
-
-                    enableDownloads(result.qr_code);
-                } else {
-                    alert(`Error: ${result.error}`);
-                }
-            } catch (error) {
-                alert('An error occurred: ' + error.toString());
-            }
-        }
-
-        function enableDownloads(qrCodeData) {
-            const pngLink = document.getElementById('downloadPng');
-            const jpgLink = document.getElementById('downloadJpg');
-            const pdfLink = document.getElementById('downloadPdf');
-
-            // Ensure file types are correctly linked for download
-            pngLink.href = qrCodeData;
-            jpgLink.href = qrCodeData.replace("image/png", "image/jpeg");
-            pdfLink.href = qrCodeData;
-
-            // Display buttons correctly
-            [pngLink, jpgLink, pdfLink].forEach(link => {
-                link.style.display = 'inline-block';
-            });
-        }
-
-
-    </script>
+    <!-- ✅ JavaScript linked from an external file -->
+    <script src="scripts/main.js"></script>
 </body>
 </html>
