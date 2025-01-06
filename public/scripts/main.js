@@ -22,6 +22,9 @@ async function generateQRCode() {
     const darkColor = document.getElementById('darkColor').value;
     const lightColor = document.getElementById('lightColor').value;
 
+    // ✅ Capturing the logo position here
+    const logoPosition = document.getElementById('logoPosition').value;
+
     if (!url) {
         alert("Please enter a valid URL.");
         return;
@@ -33,20 +36,21 @@ async function generateQRCode() {
         const reader = new FileReader();
         reader.onloadend = async function () {
             logoUrl = reader.result;
-            await sendToServer(url, logoUrl, darkColor, lightColor);
+            await sendToServer(url, logoUrl, darkColor, lightColor, logoPosition);
         };
         reader.readAsDataURL(logoInput);
     } else {
-        await sendToServer(url, null, darkColor, lightColor);
+        await sendToServer(url, null, darkColor, lightColor, logoPosition);
     }
 }
 
-async function sendToServer(url, logoUrl, darkColor, lightColor) {
+
+async function sendToServer(url, logoUrl, darkColor, lightColor, logoPosition) {
     try {
         const response = await fetch('/.netlify/functions/generate_qr', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url, logoUrl, darkColor, lightColor })
+            body: JSON.stringify({ url, logoUrl, darkColor, lightColor, logoPosition })
         });
 
         const result = await response.json();

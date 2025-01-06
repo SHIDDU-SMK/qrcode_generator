@@ -34,6 +34,8 @@ form {
 
 .file-preview-container {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 15px;
     flex-wrap: wrap;
@@ -83,4 +85,15 @@ form {
     width: 1em;
     height: 1em;
     vertical-align: -0.125em;
-  }
+}
+
+.logo-position-container {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.logo-position-container select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
