@@ -1,11 +1,12 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 5px;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 90vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
     background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
     box-sizing: border-box;
     overflow: auto;  /* ✅ Scrolling Enabled for Usability */
@@ -29,15 +30,15 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 .file-preview-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
@@ -51,7 +52,7 @@ form {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 10px;
     align-items: center;
 }
 
@@ -90,10 +91,65 @@ form {
 .logo-position-container {
     margin-top: 10px;
     text-align: left;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .logo-position-container select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
+}
+
+/* ✅ Styling the switch buttons for logo position */
+.switch-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    height: fit-content;
+}
+
+.position-btn {
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: white;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out, background-color 0.2s;
+}
+
+.position-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.position-btn.active {
+    background-color: #007BFF;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* ✅ Inline label and input styling */
+.url-input-container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.url-input-container label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.url-input-container input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
 }

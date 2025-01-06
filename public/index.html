@@ -5,35 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMK Solutions QR Code Generator version 1.0</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
 </head>
 <body>
     <div class="container">
         <h1>SMK Solutions QR Code Generator</h1>
-        
+
         <form id="qrForm">
-            <label for="url">Enter URL:</label>
-            <input type="text" id="url" placeholder="Enter URL" required>
+            <!-- Inline URL Label and Input -->
+            <div class="url-input-container">
+                <label for="url">Enter URL:</label>
+                <input type="text" id="url" placeholder="Enter URL" required>
+            </div>
 
             <!-- Logo Upload and Preview -->
             <div class="file-preview-container">
-                <label for="logoInput">Upload Logo (Optional):</label>
-                <input type="file" id="logoInput" onchange="previewLogo()">
-                <img id="logoPreview" style="display:none; max-width: 80px;" alt="Logo Preview">
-                <!-- Logo Position Dropdown -->
+                <label for="logoInput">Logo (Optional):</label>
+                <label for="logoInput">
+                    <i class="fa-solid fa-upload"></i>
+                </label>
+                <input type="file" id="logoInput" style="display: none" onchange="previewLogo()">
+                <img id="logoPreview" style="display:none; max-height: 40px;margin-left: 100px;" alt="Logo Preview">
+                <!-- Logo Position Section with Switch Buttons and Icons -->
                 <div class="logo-position-container">
-                    <label for="logoPosition">Logo Position:</label>
-                    <select id="logoPosition">
-                        <option value="center">Center</option>
-                        <option value="top-left">Top Left</option>
-                        <option value="top-right">Top Right</option>
-                        <option value="bottom-left">Bottom Left</option>
-                        <option value="bottom-right">Bottom Right</option>
-                        <option value="top-center">Top Center</option>
-                        <option value="bottom-center">Bottom Center</option>
-                        <option value="left-center">Left Center</option>
-                        <option value="right-center">Right Center</option>
-                    </select>
+                    <span>Logo Position:</span>
+                    <div class="switch-buttons">
+                        <button class="position-btn" value="top-center" onclick="setLogoPosition('top-center', event)" title="Top Center">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+                        <button class="position-btn" value="top-right" onclick="setLogoPosition('top-right', event)" title="Top Right">
+                            <i class="fa-solid fa-arrow-up" data-fa-transform="rotate-45"></i>
+                        </button>
+                        <button class="position-btn" value="right-center" onclick="setLogoPosition('right-center', event)" title="Right Center">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button class="position-btn" value="bottom-right" onclick="setLogoPosition('bottom-right', event)" title="Bottom Right">
+                            <i class="fa-solid fa-arrow-right" data-fa-transform="rotate-45"></i>
+                        </button>
+                        <button class="position-btn active" value="center" onclick="setLogoPosition('center', event)" title="Center">
+                            <i class="fa-solid fa-dot-circle"></i>
+                        </button>
+                        <button class="position-btn" value="bottom-center" onclick="setLogoPosition('bottom-center', event)" title="Bottom Center">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                        <button class="position-btn" value="bottom-left" onclick="setLogoPosition('bottom-left', event)" title="Bottom Left">
+                            <i class="fa-solid fa-arrow-down" data-fa-transform="rotate-45"></i>
+                        </button>
+                        <button class="position-btn" value="left-center" onclick="setLogoPosition('left-center', event)" title="Left Center">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button class="position-btn" value="top-left" onclick="setLogoPosition('top-left', event)" title="Top Left">
+                            <i class="fa-solid fa-arrow-left" data-fa-transform="rotate-45"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -64,22 +88,26 @@
                 <div class="download-buttons" style="display:none;">
                     <a id="downloadPng" class="download-btn" download="qrcode.png" title="Download PNG">
                         <i class="fas fa-download"></i>
-                        PNG
+                        <span>PNG</span>
                     </a>
                     <a id="downloadJpg" class="download-btn" download="qrcode.jpg" title="Download JPG">
                         <i class="fas fa-download"></i>
-                        JPG
+                        <span>JPG</span>
                     </a>
                     <a id="downloadPdf" class="download-btn" download="qrcode.pdf" title="Download PDF">
                         <i class="fas fa-download"></i>
-                        PDF
+                        <span>PDF</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-
+    <footer>
+        <p>&copy; 2024 SMK Solutions. All rights reserved.</p>
+    </footer>
     <!-- ✅ JavaScript linked from an external file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+
     <script src="scripts/main.js"></script>
 </body>
 </html>
