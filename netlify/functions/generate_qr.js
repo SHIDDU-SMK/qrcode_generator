@@ -1,5 +1,5 @@
 import QRCode from 'qrcode';
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
 
 export default async (request, context) => {
     try {
