@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMK Solutions QR Code Generator version 1.0</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> -->
+    <!-- ✅ jsPDF Library for PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 </head>
 <body>
     <div class="container">
@@ -103,7 +105,10 @@
         </div>
     </div>
     <footer>
-        <p>&copy; 2024 SMK Solutions. All rights reserved.</p>
+        <p>&copy; <span id="currentYear"></span> SMK Solutions. All rights reserved.</p>
+        <script>
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        </script>
     </footer>
     <!-- ✅ JavaScript linked from an external file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>

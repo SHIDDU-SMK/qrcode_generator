@@ -122,14 +122,39 @@ async function sendToServer(url, logoUrl, darkColor, lightColor, logoPosition) {
     }
 }
 
-// ✅ Enable download buttons for the QR Code
+// ✅ Fixed PDF generation and high-resolution image export
 function enableDownloads(qrCodeData) {
     const downloadButtons = document.querySelector('.download-buttons');
+    const { jsPDF } = window.jspdf;
 
-    document.getElementById('downloadPng').href = qrCodeData;
-    document.getElementById('downloadJpg').href = qrCodeData.replace("image/png", "image/jpeg");
-    document.getElementById('downloadPdf').href = qrCodeData;
+    // ✅ Creating a canvas for higher resolution output
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.src = qrCodeData;
 
-    // ✅ Now making sure the download buttons appear
+    img.onload = () => {
+        // ✅ Higher resolution scaling for better quality
+        canvas.width = img.width * 4;  // Trippled resolution
+        canvas.height = img.height * 4;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // ✅ Set the download links for PNG and JPG with high resolution
+        document.getElementById('downloadPng').href = canvas.toDataURL('image/png');
+        document.getElementById('downloadJpg').href = canvas.toDataURL('image/jpeg');
+
+        // ✅ Fix PDF generation using jsPDF library
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'px',
+            format: [canvas.width, canvas.height]
+        });
+
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, canvas.width, canvas.height);
+        document.getElementById('downloadPdf').href = pdf.output('dataurlstring');
+    };
+
+    // ✅ Show download buttons once QR code is ready
     downloadButtons.style.display = 'flex';
 }
+
